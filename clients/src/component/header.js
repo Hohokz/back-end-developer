@@ -47,10 +47,10 @@ function Header() {
 
                 </div>
                 <div className="flex-col">
-                    <h1 className="ml-[6rem] mt-[3rem] text-8xl text-white">
+                    <h1 className="ml-[6rem] mt-[3rem] text-3xl text-white">
                         LAUNDRY FOR YOU
                     </h1>
-                    <p className="ml-[21em] font-thin text-white text-3xl">
+                    <p className="ml-[5em] font-thin text-white text-xl">
                         WASH • DRYER • IRON
                     </p>
                 </div>

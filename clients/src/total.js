@@ -10,13 +10,13 @@ function Total() {
             `http://localhost:4000/wash`
         );
         setTotalData(results.data.data)
-        console.log(totalData)
+        console.log(results.data.data)
     }
 
     return (
 
         <div>
-            <button onClick={getPosts}>ตรวจสอบรายได้</button>
+            <button className="bg-grey-light border-t-4 border-r-4 border-b border-l rounded-full p-4" onClick={getPosts}>ตรวจสอบรายได้</button>
 
             {
                 totalData.map(item => (

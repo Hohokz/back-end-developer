@@ -1,17 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Body from './body';
+import qs from 'qs';
+
+let dataMessage = qs.stringify({
+    'message': 'you have 1 min left'
+});
 
 function Timer(props) {
 
-    const totalTime = 3600;
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://notify-api.line.me/api/notify',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer Ur1WwZeWxA91MfQNXzp7BSoayIfjTgts6KJgqGrU918'
+        },
+        data: dataMessage
+    };
+
+    const totalTime = 70;
     const [remainingTime, setRemainingTime] = useState(totalTime);
     const [state, setState] = useState('stopped');
     const [intervalId, setIntervalId] = useState(null);
     const [status, setStatus] = useState('Available')
     const [textColor, setTextColor] = useState('text-sky-600')
     const [textStatusColor, setTextStatusColor] = useState('text-green-600')
-    const apiAccessToken = 'AXVvVCzla6kaVU+WXxvNRKP1y815hmBoxv7QfdvhQTMKMzUElnQjOW6NULoxsW4ZObzum1Rfrh9fM7U5ucarQt8z9oTqkue9FdJW9QfqUkBZv408bOd2wnsd3ZR79kftsyTpgk/KtTXevBuvnkH2RAdB04t89/1O/w1cDnyilFU='
+    const apiAccessToken = 'Ur1WwZeWxA91MfQNXzp7BSoayIfjTgts6KJgqGrU918'
     const groupId = '1657779528'
 
 
@@ -40,24 +56,18 @@ function Timer(props) {
     }, [remainingTime, totalTime, intervalId]);
 
     useEffect(() => {
-        if (remainingTime <= 10 && remainingTime > 0) {
+        if (remainingTime <= 60 && remainingTime > 0) {
 
-            axios.post('https://api.line.me/v2/bot/message/push', {
-                to: groupId,
-                messages: [
-                    {
-                        type: 'text',
-                        text: `Time remaining: ${remainingTime} seconds`
-                    }
-                ]
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiAccessToken}`
-                }
-            });
+            axios.request(config)
+                .then((response) => {
+                    console.log(JSON.stringify(response.dataMessage));
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
         }
-    }, [remainingTime, apiAccessToken, groupId]);
+    });
 
     useEffect(() => {
         if (state === 'stopped' && remainingTime === 0) {
@@ -85,6 +95,7 @@ function Timer(props) {
 
             .then((response) => {
                 console.log(response)
+                console.log(data)
             }, (error) => {
                 console.log(error);
             });
