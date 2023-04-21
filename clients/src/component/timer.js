@@ -27,8 +27,7 @@ function Timer(props) {
     const [status, setStatus] = useState('Available')
     const [textColor, setTextColor] = useState('text-sky-600')
     const [textStatusColor, setTextStatusColor] = useState('text-green-600')
-    const apiAccessToken = 'Ur1WwZeWxA91MfQNXzp7BSoayIfjTgts6KJgqGrU918'
-    const groupId = '1657779528'
+
 
 
     useEffect(() => {
@@ -56,18 +55,12 @@ function Timer(props) {
     }, [remainingTime, totalTime, intervalId]);
 
     useEffect(() => {
-        if (remainingTime <= 60 && remainingTime > 0) {
+        if (remainingTime == 60) {
 
-            axios.request(config)
-                .then((response) => {
-                    console.log(JSON.stringify(response.dataMessage));
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            axios.post(`http://localhost:4000/wash/send`)
 
         }
-    });
+    }, [remainingTime]);
 
     useEffect(() => {
         if (state === 'stopped' && remainingTime === 0) {
